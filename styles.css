@@ -1375,6 +1375,19 @@ body {
     color: rgba(255, 255, 255, 0.5);
 }
 
+.footer-bottom p a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition-smooth);
+}
+
+.footer-bottom p a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
 /* ===== Responsive Design ===== */
 @media (max-width: 968px) {
     .nav-menu {
