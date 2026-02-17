@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - First Step Montessori</title>
+    <meta name="description"
+        content="View our gallery to see moments of joy, discovery, and learning at First Step Montessori.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar solid-nav">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <img src="images/logo_transparent.png" alt="First Step Montessori Logo">
+                    <h1>First Step Montessori</h1>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html#home" class="nav-link">Home</a>
+                    <a href="index.html#about" class="nav-link">About</a>
+                    <a href="index.html#why-choose-us" class="nav-link">Why Choose Us</a>
+                    <a href="index.html#pathways" class="nav-link">Learning Pathways</a>
+                    <a href="index.html#programs" class="nav-link">Programs</a>
+                    <a href="gallery.html" class="nav-link active">Gallery</a>
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Immersive Gallery Wrapper -->
+    <section class="immersive-gallery-wrapper">
+        <!-- Background Layer -->
+        <div class="immersive-bg">
+            <div id="immersive-bg-image" class="immersive-bg-image"></div>
+            <div class="immersive-overlay"></div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="immersive-content">
+            <div class="main-image-container">
+                <img id="main-gallery-image" src="" alt="Main Gallery Image" class="main-gallery-image">
+            </div>
+            <div class="location-tag mt-4">
+                <i class="fas fa-camera"></i>
+                <span id="gallery-category-tag">Gallery</span>
+                <button id="mobile-filter-icon-btn" class="mobile-filter-icon-btn">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+        </main>
+
+        <!-- Thumbnail Reel -->
+        <div class="gallery-reel-container">
+            <!-- Filter Controls (Optional, keeping simple for now or integrated) -->
+            <!-- Mobile Filter Toggle -->
+
+
+            <!-- Filter Controls -->
+            <div class="gallery-filters" id="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="classroom" data-category-prefix="classroom">Classroom</button>
+                <button class="filter-btn" data-filter="outdoor" data-category-prefix="outdoor">Outdoor</button>
+                <button class="filter-btn" data-filter="arts" data-category-prefix="arts">Arts</button>
+                <button class="filter-btn" data-filter="activities"
+                    data-category-prefix="activities">Activities</button>
+            </div>
+
+            <div class="gallery-reel" id="gallery-reel">
+                <!-- Thumbnails will be injected here -->
+            </div>
+
+            <!-- Scroll Controls -->
+            <div class="gallery-controls">
+                <button id="scroll-left" class="control-btn"><i class="fas fa-chevron-left"></i></button>
+                <button id="scroll-right" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo-container">
+                        <img src="images/logo_transparent.png" alt="First Step Montessori Logo">
+                        <h3>First Step Montessori</h3>
+                    </div>
+                    <p>Nurturing young minds through the Montessori method of education since 2009.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#programs">Programs</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="#" class="social-link twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 First Step Montessori. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/919606907733" target="_blank" class="floating-btn whatsapp-btn"
+            aria-label="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <button id="scrollTopBtn" class="floating-btn scroll-top-btn" aria-label="Scroll to Top">
+            <img src="images/scroll-top.jpg" alt="Scroll to Top">
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
