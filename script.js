@@ -393,20 +393,85 @@ const scrollRightBtn = document.getElementById('scroll-right');
 // Reuse the existing galleryImages array defined above or define it here if replacing the previous block entirely
 // Since I textually replaced the block where galleryImages was defined, I must include it.
 
-const galleryImages = [
-    { src: 'images/gallery/classroomImage1.jpg', category: 'classroom', alt: 'Montessori Activity' },
-    { src: 'images/gallery/classroomImage2.jpg', category: 'classroom', alt: 'Focused Learning' },
-    { src: 'images/gallery/classroomImage3.jpg', category: 'classroom', alt: 'Classroom Environment' },
-    { src: 'images/gallery/outdoorImage1.jpg', category: 'outdoor', alt: 'Outdoor Exploration' },
-    { src: 'images/gallery/outdoorImage2.jpg', category: 'outdoor', alt: 'Playtime Fun' },
-    { src: 'images/gallery/outdoorImage3.jpg', category: 'outdoor', alt: 'Nature Discovery' },
-    { src: 'images/gallery/artsImage1.jpg', category: 'arts', alt: 'Creative Arts' },
-    { src: 'images/gallery/artsImage2.jpg', category: 'arts', alt: 'Artistic Expression' },
-    { src: 'images/gallery/artsImage3.jpg', category: 'arts', alt: 'Crafting Joy' },
-    { src: 'images/gallery/activitiesImage1.jpg', category: 'activities', alt: 'Group Activities' },
-    { src: 'images/gallery/activitiesImage2.jpg', category: 'activities', alt: 'Learning Together' },
-    { src: 'images/gallery/activitiesImage3.jpg', category: 'activities', alt: 'Fun & Games' }
-];
+let galleryImages = [];
+
+// Fetch filters config and then fetch images from GitHub repo
+fetch('gallery-filters.json')
+    .then(res => res.json())
+    .then(config => {
+        // Generate filter buttons dynamically
+        const filtersContainer = document.getElementById('gallery-filters');
+        if (filtersContainer) {
+            filtersContainer.innerHTML = '<button class="filter-btn active" data-filter="all">All</button>';
+            config.filters.forEach(filter => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.setAttribute('data-filter', filter.prefix);
+                btn.setAttribute('data-category-prefix', filter.prefix);
+                btn.textContent = filter.name;
+                filtersContainer.appendChild(btn);
+            });
+
+            // Bind filter button click handlers
+            const filterButtons = filtersContainer.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filterValue = btn.getAttribute('data-filter');
+                    const prefix = btn.getAttribute('data-category-prefix') || filterValue;
+                    renderReel(prefix);
+                });
+            });
+        }
+
+        return fetch("https://api.github.com/repos/RohithCZ1982/FSM-Mys/contents/images/gallery")
+            .then(res => res.json())
+            .then(data => ({ data, config }));
+    })
+    .then(({ data, config }) => {
+        data.forEach(file => {
+            if (file.type === "file" && file.name.match(/\.(jpeg|jpg|gif|png)$/i)) {
+                // Determine category based on filename prefix and config
+                let category = 'other';
+                let altText = 'Gallery Image';
+
+                const fileNameLower = file.name.toLowerCase();
+                for (let i = 0; i < config.filters.length; i++) {
+                    const filter = config.filters[i];
+                    if (fileNameLower.startsWith(filter.prefix.toLowerCase()) || fileNameLower.includes(filter.prefix.toLowerCase())) {
+                        category = filter.prefix;
+                        altText = filter.name + ' Image';
+                        break;
+                    }
+                }
+
+                galleryImages.push({
+                    src: `images/gallery/${file.name}`, // using local path for better performance instead of download_url
+                    category: category,
+                    alt: altText
+                });
+            }
+        });
+
+        // Initialize gallery and render reel AFTER images have been fetched
+        if (reelContainer) {
+            renderReel('all');
+        }
+    })
+    .catch(error => {
+        console.error('Error loading gallery config or images:', error);
+        // Fallback: Use some defaults if API fails
+        galleryImages = [
+            { src: 'images/gallery/classroomImage1.jpg', category: 'classroom', alt: 'Montessori Activity' },
+            { src: 'images/gallery/outdoorImage1.jpg', category: 'outdoor', alt: 'Outdoor Exploration' },
+            { src: 'images/gallery/artsImage1.jpg', category: 'arts', alt: 'Creative Arts' },
+            { src: 'images/gallery/activitiesImage1.jpg', category: 'activities', alt: 'Group Activities' }
+        ];
+        if (reelContainer) {
+            renderReel('all');
+        }
+    });
 
 // Mobile Filter Toggle
 const mobileFilterIconBtn = document.getElementById('mobile-filter-icon-btn');
@@ -516,8 +581,8 @@ function renderReel(filterIndex) {
 
         currentGalleryImages = galleryImages.filter(img => {
             if (filterIndex === 'all') return true;
-            const filename = img.src.split('/').pop();
-            return filename.startsWith(filterPrefix);
+            const filename = img.src.split('/').pop().toLowerCase();
+            return filename.startsWith(filterPrefix.toLowerCase()) || filename.includes(filterPrefix.toLowerCase());
         });
 
         if (currentGalleryImages.length === 0) {
@@ -562,28 +627,13 @@ if (scrollRightBtn && reelContainer) {
     });
 }
 
-// Filter Button Click Handlers
-const filterButtons = document.querySelectorAll('.filter-btn');
-if (filterButtons.length > 0) {
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
-            filterButtons.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            btn.classList.add('active');
-
-            const filterValue = btn.getAttribute('data-filter');
-            const prefix = btn.getAttribute('data-category-prefix') || filterValue;
-
-            renderReel(prefix);
-        });
-    });
-}
+// Filter Button Click Handlers are now bound dynamically after loading config.
 
 // Initialize
 if (reelContainer) {
     // Check url hash for initial filter? Or just load all.
-    renderReel('all');
+    // Initialization is now handled inside the fetch callback above.
+    // renderReel('all');
 
     // Auto-advance slideshow? Optional.
     // setInterval(() => { updateMainView(activeImageIndex + 1); }, 5000);
