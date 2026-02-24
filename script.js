@@ -425,7 +425,7 @@ fetch('gallery-filters.json')
             });
         }
 
-        return fetch("https://api.github.com/repos/RohithCZ1982/FSM-Mys/contents/images/gallery")
+        return fetch("https://api.github.com/repos/LavanyaFSM/SchoolWebsite/contents/images/gallery")
             .then(res => res.json())
             .then(data => ({ data, config }));
     })
@@ -494,6 +494,7 @@ if (mobileFilterIconBtn && galleryFilters) {
 
 let currentGalleryImages = []; // Filtered list
 let activeImageIndex = 0;
+let isAutoPlayPaused = false;
 
 function updateMainView(index) {
     if (!currentGalleryImages.length) return;
@@ -555,9 +556,11 @@ function updateMainView(index) {
 
 function startAutoPlay() {
     stopAutoPlay(); // clear any existing
-    autoPlayInterval = setInterval(() => {
-        updateMainView(activeImageIndex + 1);
-    }, 4000); // 4 seconds per slide
+    if (!isAutoPlayPaused) {
+        autoPlayInterval = setInterval(() => {
+            updateMainView(activeImageIndex + 1);
+        }, 4000); // 4 seconds per slide
+    }
 }
 
 function stopAutoPlay() {
@@ -615,15 +618,28 @@ function renderReel(filterIndex) {
 // Controls
 if (scrollLeftBtn && reelContainer) {
     scrollLeftBtn.addEventListener('click', () => {
-        reelContainer.scrollBy({ left: -300, behavior: 'smooth' });
-        resetAutoPlay();
+        updateMainView(activeImageIndex - 1);
     });
 }
 
 if (scrollRightBtn && reelContainer) {
     scrollRightBtn.addEventListener('click', () => {
-        reelContainer.scrollBy({ left: 300, behavior: 'smooth' });
-        resetAutoPlay();
+        updateMainView(activeImageIndex + 1);
+    });
+}
+
+const pauseResumeBtn = document.getElementById('pause-resume');
+if (pauseResumeBtn) {
+    pauseResumeBtn.addEventListener('click', () => {
+        isAutoPlayPaused = !isAutoPlayPaused;
+        const icon = pauseResumeBtn.querySelector('i');
+        if (isAutoPlayPaused) {
+            icon.className = 'fas fa-play';
+            stopAutoPlay();
+        } else {
+            icon.className = 'fas fa-pause';
+            startAutoPlay();
+        }
     });
 }
 
