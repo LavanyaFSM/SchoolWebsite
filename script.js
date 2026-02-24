@@ -421,6 +421,19 @@ fetch('gallery-filters.json')
                     const filterValue = btn.getAttribute('data-filter');
                     const prefix = btn.getAttribute('data-category-prefix') || filterValue;
                     renderReel(prefix);
+
+                    // Close mobile filter menu if it's open
+                    const mobileFilterIconBtn = document.getElementById('mobile-filter-icon-btn');
+                    if (filtersContainer.classList.contains('show')) {
+                        filtersContainer.classList.remove('show');
+                        if (mobileFilterIconBtn) {
+                            mobileFilterIconBtn.classList.remove('active');
+                            const icon = mobileFilterIconBtn.querySelector('i');
+                            if (icon) {
+                                icon.className = 'fas fa-filter';
+                            }
+                        }
+                    }
                 });
             });
         }
