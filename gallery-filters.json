@@ -1,0 +1,28 @@
+{
+  "filters": [
+    {
+      "name": "Classroom",
+      "prefix": "classroom"
+    },
+    {
+      "name": "Outdoor",
+      "prefix": "outdoor"
+    },
+    {
+      "name": "Arts",
+      "prefix": "arts"
+    },
+    {
+      "name": "Activities",
+      "prefix": "activities"
+    },
+    {
+      "name": "Community",
+      "prefix": "community"
+    },
+    {
+      "name": "SchoolDay",
+      "prefix": "schoolday"
+    }
+  ]
+}
