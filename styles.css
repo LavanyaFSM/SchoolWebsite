@@ -267,18 +267,6 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-.menu-badges {
-    position: absolute;
-    right: 0;
-    top: 64px; /* bring badges down without disturbing menu */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
-    z-index: 1100;
-    pointer-events: auto;
-}
-
 .admissions-badge,
 .summer-camp-badge {
     position: relative;
@@ -364,12 +352,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    .menu-badges {
-        right: 12px;
-        top: 72px;
-        align-items: flex-start;
-    }
-
     .admissions-badge,
     .summer-camp-badge {
         padding: 6px 10px;
@@ -1698,7 +1680,31 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: flex-end;
     z-index: 1000;
+}
+
+.floating-badge {
+    width: max-content;
+    max-width: 220px;
+    padding: 10px 12px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+}
+
+.floating-badge .admissions-badge-text {
+    text-align: right;
+    align-items: flex-end;
+}
+
+.floating-badge .admissions-label,
+.floating-badge .admissions-years {
+    font-size: 0.75rem;
+    line-height: 1.1;
+}
+
+.floating-badge .admissions-label {
+    letter-spacing: 0.06em;
 }
 
 .floating-btn {
@@ -1772,6 +1778,12 @@ body {
 
     .floating-btn i {
         font-size: 24px;
+    }
+
+    .floating-badge {
+        max-width: 200px;
+        padding: 8px 10px;
+        border-radius: 16px;
     }
 }
 
