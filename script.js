@@ -262,6 +262,27 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Scroll to Top Button
+const admission = document.getElementById('admission');
+const summerCampBadge = document.getElementById('summerCamp'); 
+
+
+// Set initial state on load
+if (window.scrollY < 300) {
+    admission.classList.add('visible');
+    summerCampBadge.classList.add('visible');
+}
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY < 300) {
+        admission.classList.add('visible');
+        summerCampBadge.classList.add('visible'); 
+    } else {
+        admission.classList.remove('visible');
+        summerCampBadge.classList.remove('visible');  
+    }
+});
+
 // Smooth scroll to top when clicked
 if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', () => {

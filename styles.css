@@ -280,6 +280,9 @@ body {
     color: var(--text-dark);
     font-family: var(--font-primary);
     overflow: visible;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .admissions-badge::before,
@@ -314,7 +317,13 @@ body {
     background: var(--secondary-color);
     color: white;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.admissions-badge:not(.visible),
+.summer-camp-badge:not(.visible) {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
 }
 
 .summer-camp-badge::before,
