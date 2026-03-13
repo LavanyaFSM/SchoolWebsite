@@ -1690,11 +1690,113 @@ body {
     padding: 10px 12px;
     border-radius: 18px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+    position: relative;
+    transform-origin: right center;
+    animation: floatingBadgeBob 2.8s ease-in-out infinite;
+}
+
+.floating-badge > * {
+    position: relative;
+    z-index: 1;
 }
 
 .floating-badge .admissions-badge-text {
     text-align: right;
     align-items: flex-end;
+}
+
+/* Animated highlight for floating badges (playful + child-friendly) */
+.floating-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.85;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 35%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0) 65%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 220% 100%;
+    animation: floatingBadgeShine 2.2s ease-in-out infinite;
+    mix-blend-mode: soft-light;
+}
+
+.floating-badge::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    padding: 3px;
+    background: conic-gradient(from 0deg,
+            rgba(255, 230, 109, 0.0),
+            rgba(255, 230, 109, 0.95),
+            rgba(78, 205, 196, 0.95),
+            rgba(255, 107, 107, 0.95),
+            rgba(255, 230, 109, 0.0));
+    animation: floatingBadgeSpin 2.4s linear infinite, floatingBadgeGlow 1.7s ease-in-out infinite;
+    opacity: 1;
+    pointer-events: none;
+    z-index: -1;
+
+    /* Show only the "ring" */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.floating-badge:hover::after {
+    opacity: 1;
+    animation-duration: 2.0s;
+}
+
+@keyframes floatingBadgeBob {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes floatingBadgeSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatingBadgeGlow {
+    0%,
+    100% {
+        filter: drop-shadow(0 0 0 rgba(255, 230, 109, 0.0)) drop-shadow(0 0 0 rgba(78, 205, 196, 0.0));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 10px rgba(255, 230, 109, 0.45)) drop-shadow(0 0 14px rgba(78, 205, 196, 0.35));
+    }
+}
+
+@keyframes floatingBadgeShine {
+    0% {
+        background-position: 140% 0;
+        opacity: 0.6;
+    }
+
+    45% {
+        opacity: 0.95;
+    }
+
+    100% {
+        background-position: -40% 0;
+        opacity: 0.6;
+    }
 }
 
 .floating-badge .admissions-label,
@@ -1769,6 +1871,7 @@ body {
         bottom: 20px;
         right: 20px;
         gap: 10px;
+        align-items: flex-end; /* keep right aligned on mobile */
     }
 
     .floating-btn {
