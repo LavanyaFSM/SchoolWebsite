@@ -74,6 +74,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
+    position: relative;
 }
 
 .logo {
@@ -261,20 +262,21 @@ body {
 }
 
 /* ===== Hero Admissions Badge (Cloud Shape) ===== */
-.hero-badges {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 20;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-end;
-}
-
 .hero-badge {
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
+}
+
+.menu-badges {
+    position: absolute;
+    right: 0;
+    top: 64px; /* bring badges down without disturbing menu */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    z-index: 1100;
+    pointer-events: auto;
 }
 
 .admissions-badge,
@@ -362,10 +364,10 @@ body {
 }
 
 @media (max-width: 768px) {
-    .hero-badges {
-        top: 16px;
+    .menu-badges {
         right: 12px;
-        gap: 10px;
+        top: 72px;
+        align-items: flex-start;
     }
 
     .admissions-badge,
@@ -1671,6 +1673,11 @@ body {
         gap: 25px;
         width: 100%;
         margin-top: 30px;
+    }
+
+    /* Hide duplicated (cloned) testimonials on mobile */
+    .testimonials-grid .testimonial-card.cloned {
+        display: none;
     }
 
     .testimonials-section::before {
