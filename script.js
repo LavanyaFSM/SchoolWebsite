@@ -674,42 +674,26 @@ function parseParentImageFilenames() {
     const parentImages = document.querySelectorAll('.testimonial-card .parent-image');
 
     parentImages.forEach(img => {
-        // Get the filename from the src attribute
         const src = img.getAttribute('src');
         if (!src) return;
 
         // Extract filename from path (e.g., "images/parent-Dr Suman Girish-KG2 Parent.jpg")
-        const filename = src.split('/').pop(); // "parent-Dr Suman Girish-KG2 Parent.jpg"
-
-        // Remove file extension
-        const nameWithoutExt = filename.replace(/\.[^/.]+$/, ''); // "parent-Dr Suman Girish-KG2 Parent"
-
-        // Split by delimiter '-'
+        const filename = src.split('/').pop();
+        const nameWithoutExt = filename.replace(/\.[^/.]+$/, '');
         const parts = nameWithoutExt.split('-');
 
         // Format: parent-[ParentName]-[ChildClass]
-        // parts[0] = "parent" (identifier, ignore)
-        // parts[1] = "Dr Suman Girish" (parent name)
-        // parts[2] = "KG2 Parent" (child class)
-
         if (parts.length >= 3) {
-            const identifier = parts[0].trim(); // "parent"
-            const parentName = parts[1].trim(); // "Dr Suman Girish"
-            const childClass = parts[2].trim(); // "KG2 Parent"
+            const parentName = parts[1].trim();
+            const childClass = parts[2].trim();
 
-            // Find the corresponding author info elements
             const testimonialCard = img.closest('.testimonial-card');
             if (testimonialCard) {
                 const authorName = testimonialCard.querySelector('.author-name');
                 const authorRole = testimonialCard.querySelector('.author-role');
 
-                if (authorName && parentName) {
-                    authorName.textContent = parentName;
-                }
-
-                if (authorRole && childClass) {
-                    authorRole.textContent = childClass;
-                }
+                if (authorName && parentName) authorName.textContent = parentName;
+                if (authorRole && childClass) authorRole.textContent = childClass;
             }
         }
     });
