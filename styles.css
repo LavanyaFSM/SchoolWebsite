@@ -74,6 +74,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
+    position: relative;
 }
 
 .logo {
@@ -258,6 +259,149 @@ body {
     font-weight: 700;
     color: white;
     /* Bright white for emphasis */
+}
+
+/* ===== Hero Admissions Badge (Cloud Shape) ===== */
+.hero-badge {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.admissions-badge,
+.summer-camp-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    background: var(--accent-color);
+    border-radius: 999px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    color: var(--text-dark);
+    font-family: var(--font-primary);
+    overflow: visible;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.admissions-badge::before,
+.admissions-badge::after,
+.summer-camp-badge::before,
+.summer-camp-badge::after {
+    content: '';
+    position: absolute;
+    background: var(--accent-color);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* Cloud bubbles */
+.admissions-badge::before,
+.summer-camp-badge::before {
+    width: 26px;
+    height: 26px;
+    top: -10px;
+    left: 8px;
+}
+
+.admissions-badge::after,
+.summer-camp-badge::after {
+    width: 32px;
+    height: 32px;
+    top: -4px;
+    right: 4px;
+}
+
+.summer-camp-badge {
+    background: var(--secondary-color);
+    color: white;
+    cursor: pointer;
+}
+
+.admissions-badge:not(.visible),
+.summer-camp-badge:not(.visible) {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+}
+
+.summer-camp-badge::before,
+.summer-camp-badge::after {
+    background: var(--secondary-color);
+}
+
+.summer-camp-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.02);
+}
+
+.summer-camp-badge:active {
+    transform: translateY(0);
+}
+
+.admissions-badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+}
+
+.admissions-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.admissions-years {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .admissions-badge,
+    .summer-camp-badge {
+        padding: 6px 10px;
+    }
+
+    .admissions-label,
+    .admissions-years {
+        font-size: 0.7rem;
+    }
+}
+
+/* ===== Simple Poster Page ===== */
+.simple-page {
+    min-height: 100vh;
+    background: var(--bg-light);
+    padding-top: 110px; /* space for fixed navbar */
+    padding-bottom: 60px;
+}
+
+.poster-center {
+    min-height: calc(100vh - 110px - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.poster-card {
+    width: min(900px, 100%);
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.poster-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
 }
 
 @media (max-width: 768px) {
@@ -1522,6 +1666,11 @@ body {
         margin-top: 30px;
     }
 
+    /* Hide duplicated (cloned) testimonials on mobile */
+    .testimonials-grid .testimonial-card.cloned {
+        display: none;
+    }
+
     .testimonials-section::before {
         display: none;
     }
@@ -1540,7 +1689,133 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    align-items: flex-end;
     z-index: 1000;
+}
+
+.floating-badge {
+    width: max-content;
+    max-width: 220px;
+    padding: 10px 12px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+    position: relative;
+    transform-origin: right center;
+    animation: floatingBadgeBob 2.8s ease-in-out infinite;
+}
+
+.floating-badge > * {
+    position: relative;
+    z-index: 1;
+}
+
+.floating-badge .admissions-badge-text {
+    text-align: right;
+    align-items: flex-end;
+}
+
+/* Animated highlight for floating badges (playful + child-friendly) */
+.floating-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.85;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 35%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0) 65%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 220% 100%;
+    animation: floatingBadgeShine 2.2s ease-in-out infinite;
+    mix-blend-mode: soft-light;
+}
+
+.floating-badge::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    padding: 3px;
+    background: conic-gradient(from 0deg,
+            rgba(255, 230, 109, 0.0),
+            rgba(255, 230, 109, 0.95),
+            rgba(78, 205, 196, 0.95),
+            rgba(255, 107, 107, 0.95),
+            rgba(255, 230, 109, 0.0));
+    animation: floatingBadgeSpin 2.4s linear infinite, floatingBadgeGlow 1.7s ease-in-out infinite;
+    opacity: 1;
+    pointer-events: none;
+    z-index: -1;
+
+    /* Show only the "ring" */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.floating-badge:hover::after {
+    opacity: 1;
+    animation-duration: 2.0s;
+}
+
+@keyframes floatingBadgeBob {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes floatingBadgeSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes floatingBadgeGlow {
+    0%,
+    100% {
+        filter: drop-shadow(0 0 0 rgba(255, 230, 109, 0.0)) drop-shadow(0 0 0 rgba(78, 205, 196, 0.0));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 10px rgba(255, 230, 109, 0.45)) drop-shadow(0 0 14px rgba(78, 205, 196, 0.35));
+    }
+}
+
+@keyframes floatingBadgeShine {
+    0% {
+        background-position: 140% 0;
+        opacity: 0.6;
+    }
+
+    45% {
+        opacity: 0.95;
+    }
+
+    100% {
+        background-position: -40% 0;
+        opacity: 0.6;
+    }
+}
+
+.floating-badge .admissions-label,
+.floating-badge .admissions-years {
+    font-size: 0.75rem;
+    line-height: 1.1;
+}
+
+.floating-badge .admissions-label {
+    letter-spacing: 0.06em;
 }
 
 .floating-btn {
@@ -1605,6 +1880,7 @@ body {
         bottom: 20px;
         right: 20px;
         gap: 10px;
+        align-items: flex-end; /* keep right aligned on mobile */
     }
 
     .floating-btn {
@@ -1614,6 +1890,12 @@ body {
 
     .floating-btn i {
         font-size: 24px;
+    }
+
+    .floating-badge {
+        max-width: 200px;
+        padding: 8px 10px;
+        border-radius: 16px;
     }
 }
 
