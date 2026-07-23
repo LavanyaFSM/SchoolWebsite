@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos - First Step Montessori</title>
+    <meta name="description"
+        content="Watch our collection of videos featuring activities and moments from First Step Montessori.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Videos Page Styles */
+        .videos-hero {
+            background: #FFF9F0;
+            color: #333;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .videos-hero h1 {
+            font-size: 3rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+
+        .videos-hero p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .videos-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-icon-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-card:hover .play-icon-overlay {
+            opacity: 1;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 8px 0;
+        }
+
+        .video-size {
+            font-size: 0.9rem;
+            color: #999;
+            margin: 0;
+        }
+
+        /* Modal Styles */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow: auto;
+        }
+
+        .video-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #000;
+            width: 90%;
+            max-width: 900px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .modal-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #ccc;
+        }
+
+        .modal-title {
+            padding: 20px;
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .videos-hero h1 {
+                font-size: 2rem;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .close-modal {
+                top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar solid-nav">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <img src="images/logo_transparent.png" alt="First Step Montessori Logo">
+                    <h1>First Step Montessori</h1>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <a href="index.html#home" class="nav-link">Home</a>
+                    <a href="index.html#about" class="nav-link">About</a>
+                    <a href="index.html#why-choose-us" class="nav-link">Why Choose Us</a>
+                    <a href="index.html#pathways" class="nav-link">Learning Pathways</a>
+                    <a href="index.html#programs" class="nav-link">Programs</a>
+                    <a href="gallery.html" class="nav-link">Gallery</a>
+                    <a href="videos.html" class="nav-link active">Videos</a>
+                    <a href="index.html#contact" class="nav-link">Contact</a>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Videos Hero Section -->
+    <section class="videos-hero">
+        <h1>Our Memories</h1>
+        <p>Watch moments of joy, learning, and growth at First Step Montessori</p>
+    </section>
+
+    <!-- Videos Container -->
+    <div class="videos-container">
+        <div class="videos-grid" id="videosGrid">
+            <!-- Videos will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <video id="modalVideo" class="modal-video" controls>
+                Your browser does not support the video tag.
+            </video>
+            <div class="modal-title" id="modalTitle"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo-container">
+                        <img src="images/logo_transparent.png" alt="First Step Montessori Logo">
+                        <h3>First Step Montessori</h3>
+                    </div>
+                    <p>Nurturing young minds through the Montessori method of education since 2009.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📧 <a href="mailto:contact@firststepmontessori.com">contact@firststepmontessori.com</a></p>
+                    <p>📞 <a href="tel:+91XXXXXXXXXX">+91 XXXXXXXXXX</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 First Step Montessori. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="videos.js"></script>
+</body>
+
+</html>
